@@ -19,41 +19,23 @@
    <thead>
     <tr>
      <th scope="row">Expense Type</th>
-     <th scope="row">Expense Item</th>
-     <th scope="row">Expense Money</th>
-     <th scope="row">Expense Date</th>
-     <th scope="row">Edit</th>
-     <th scope="row">Delete</th>
+     <th scope="row">View graph</th>
     </tr>
    </thead>
    <tbody>
-    <c:forEach items="${expense_list}" var="expense" >
+    <c:forEach items="${expensetype_list}" var="expense" >
      <tr>
       
       <td>${expense.getExpenseType()}</td>
-      <td>${expense.getExpenseItem()}</td>
-      <td>${expense.getExpenseMoney()}</td>
-      <td>${expense.getExpenseDate()}</td>
-
       <td>
-       <spring:url value="/expense/update/${expense.id }" var="updateURL" />
-       <a class="btn btn-primary" href="${updateURL }" role="button">Update</a>
-      </td>
-      <td>
-       <spring:url value="/expense/delete/${expense.id }" var="deleteURL" />
-       <a class="btn btn-primary" href="${deleteURL }" role="button">Delete</a>
+       <spring:url value="/expense/view/${expense.getExpenseType()}" var="updateURL" />
+       <a class="btn btn-primary" href="${updateURL}" role="button">View Graph</a>
       </td>
      </tr>
     </c:forEach>
    </tbody>
   </table>
-  <spring:url value="/expense/add" var="addURL" />
-  <a class="btn btn-primary" href="${addURL}" role="button">Add New Expense</a>
+ 
  </div>
- <br>
- <center>
-  <spring:url value="/expense/graph" var="graphURL" />
-  <a class="btn btn-primary" href="${graphURL}" role="button">View Graph</a>
-</center>
 </body>
 </html>

@@ -56,5 +56,16 @@ public class ExpenseDaoImpl implements ExpenseDao {
   String query = "DELETE FROM expense WHERE id=?";
   jdbcTemplate.update(query, id);
  }
+ 
+ 
+
+ @Override
+ public List<Expense> getAllByExpenseType(String ExpenseType) {
+  String query = "SELECT expenseitem from expense where expensetype=?";
+  RowMapper<Expense> rowMapper = new ExpenseRowMapper();
+  List<Expense> li = jdbcTemplate.query(query, rowMapper,ExpenseType);
+  System.out.println(ExpenseType);
+  return li;
+ }
 
 }

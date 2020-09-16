@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import com.example.dao.ExpenseDaoImpl;
 import com.example.model.Expense;
 
+
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
  
  @Autowired
  private ExpenseDaoImpl expenseDao;
+ 
 
  @Override
  public List<Expense> getAllExpenses() {
@@ -39,5 +41,16 @@ public class ExpenseServiceImpl implements ExpenseService {
  public void deleteExpense(int id) {
   expenseDao.deleteExpense(id);
  }
+
+public List<Expense> getAllByExpenseType(String ExpenseType) {
+	// TODO Auto-generated method stub
+	return expenseDao.getAllExpenses();
+}
+
+
+
+ 
+
+
 
 }

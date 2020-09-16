@@ -13,4 +13,8 @@ public interface ExpenseService {
 		
 		public void deleteExpense(int id);
 		
+		public List<Expense> getAllByExpenseType(String ExpenseType);
+		
+		//public List<Expense> viewExpenseGraph(String expensetype);
+		
 }
