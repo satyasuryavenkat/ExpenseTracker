@@ -1,0 +1,1 @@
+create table expense(id int not null auto_increment,expensetype varchar(100),expenseitem varchar(100),expensemoney int,expensedate varchar(100), primary key(id));
