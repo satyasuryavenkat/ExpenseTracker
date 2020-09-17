@@ -31,8 +31,10 @@
   			<a class="btn btn-primary" href="${addURL}" role="button">View/Add Expenses</a>
   			
   			<spring:url value="/expense/graph" var="addURL" />
-  			<a class="btn btn-primary" href="${addURL}" role="button">View Graph</a>
+  			<a class="btn btn-primary" href="${addURL}" role="button">View Expense Type Graph</a>
   	
+  			<spring:url value="/expense/monthly" var="addURL" />
+  			<a class="btn btn-primary" href="${addURL}" role="button">View Monthly Graph</a>
  </div>
  
  <h1>Expense Tracker</h1>

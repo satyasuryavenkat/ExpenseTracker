@@ -25,9 +25,6 @@
   			
   			<spring:url value="/expense/graph" var="addURL" />
   			<a class="btn btn-primary" href="${addURL}" role="button">View ExpenseType Graph</a>
-  			
-  			<spring:url value="/expense/monthly" var="addURL" />
-  			<a class="btn btn-primary" href="${addURL}" role="button">View Monthly Graph</a>
   	</center>
  </div>
 	<div class="container">
@@ -36,8 +33,7 @@
 		<div id="container"
 			style="width: 600px; height: 400px; margin: 0 auto"></div>
 			<center>
-			<p>The maximum Money spending on <b>${maxitem}</b> of <b>${max}</b> Rs</p>
-			<spring:url value="/expense/graph" var="addURL" />
+			<spring:url value="/expense/" var="addURL" />
   			<a class="btn btn-primary" href="${addURL}" role="button">Back</a>
   			</center>
 	</div>
@@ -55,19 +51,19 @@
             type: 'column'
         },
         title: {
-            text: 'Total Spend vs Item'
+            text: 'Total Spend vs Months'
         },
         subtitle: {
             text: ''
         },
         xAxis: {
         
-            categories: 	${itemlist},
+            categories: 	${monthlist},
             crosshair: true
         },
         yAxis: {
             min: 0,
-            max:5000,
+            max:50000,
             title: {
                 text: 'Money Spent in [INR]'
             }
@@ -87,8 +83,8 @@
             }
         },
         series: [{
-            name: 'Items',
-            data: ${surveyMap.values()}
+            name: 'Months',
+            data: ${monthlyMap.values()}
         }]
     });
     });

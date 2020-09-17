@@ -1,7 +1,13 @@
 package com.example.controller;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -112,19 +118,40 @@ public class ExpenseController {
 		 
 		 g.put(iname,money);
 		 
- 		// System.out.println(graphlist.get(i).getExpenseType());
+ 		//System.out.println(graphlist.get(i).getExpenseDate());
 		 //System.out.println(graphlist.get(i).getExpenseItem());
 	 }
 	 getgraphList(g);
 	 List<String> ll = new ArrayList<>();
+	 
+	 int max=0;
+	 String item ="";
 	 for(String key : g.keySet())
 	 {
+		 
+		 if(g.get(key)>max)
+		 {
+			 max=g.get(key);
+			 
+		 }
+		 
 		 key='"'+key+'"';
 		 ll.add(key);
 		 
+		 
+		 
 		// System.out.printf("%s %d\n",key,g.get(key));
 	 }
-	 	
+	 
+	 for(String k: g.keySet()) {
+		    if(g.get(k).equals(max)) {
+		    	item+=k;
+		         
+		    }
+		}
+	 
+	 model.addAttribute("max",max);
+	 model.addAttribute("maxitem",item);
 	 model.addAttribute("itemlist",ll);
 	  model.addAttribute("surveyMap", g);
 	  
@@ -134,6 +161,101 @@ public class ExpenseController {
 	  }
 	  return "final_graph";
  }
+ 
+ @RequestMapping(value= {"/monthly"}, method=RequestMethod.GET)
+ public String getDayGraph(ModelMap model) {
+  
+  List<Expense> lis = expenseService.getAllExpenses();
+  Calendar mydate = new GregorianCalendar();
+  Map<Integer, Integer> g =new LinkedHashMap<>();
+  List<String> l = new ArrayList<>();
+  
+  for(int i=0;i<lis.size();i++)
+  {
+	  String date = lis.get(i).getExpenseDate();
+	  DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	  Date dat=null;
+	try {
+		dat = format.parse(date);
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	mydate.setTime(dat);
+	
+	  int month=mydate.get(Calendar.MONTH)+1;
+	  
+		 int money = g.containsKey(month)? g.get(month) : 0;
+		 money = money + lis.get(i).getExpenseMoney();
+		 g.put(month,money);
+	  //System.out.println(month);
+  }
+  
+  
+	 for(Integer key : g.keySet())
+	 {
+		 String m="";
+		 if(key==1)
+		 {
+			 m+='"'+"January"+'"';
+		 }
+		 if(key==2)
+		 {
+			 m+='"'+"Frebuary"+'"';
+		 }
+		 if(key==3)
+		 {
+			 m+='"'+"March"+'"';
+		 }
+		 if(key==4)
+		 {
+			 m+='"'+"April"+'"';
+		 }
+		 if(key==5)
+		 {
+			 m+='"'+"May"+'"';
+		 }
+		 if(key==6)
+		 {
+			 m+='"'+"June"+'"';
+		 }
+		 if(key==7)
+		 {
+			 m+='"'+"July"+'"';
+		 }
+		 if(key==8)
+		 {
+			 m+='"'+"August"+'"';
+		 }
+		 if(key==9)
+		 {
+			 m+='"'+"September"+'"';
+		 }
+		 if(key==10)
+		 {
+			 m+='"'+"October"+'"';
+		 }
+		 if(key==11)
+		 {
+			 m+='"'+"November"+'"';
+		 }
+		 if(key==12)
+		 {
+			 m+='"'+"December"+'"';
+		 }
+		
+		 
+		 l.add(m);
+		 
+		//System.out.printf("%d",key);
+	 }
+  
+  model.addAttribute("monthlist",l);
+  model.addAttribute("monthlyMap", g);
+  return "monthly_graph";
+ }
+ 
+ 
  
  @ModelAttribute("graph")
  public Map<String,Integer> getgraphList(Map<String,Integer> mp) {

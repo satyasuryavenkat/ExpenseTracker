@@ -20,7 +20,10 @@
   			<a class="btn btn-primary" href="${addURL}" role="button">Home</a>
   			
   			<spring:url value="/expense/graph" var="addURL" />
-  			<a class="btn btn-primary" href="${addURL}" role="button">View Graph</a>
+  			<a class="btn btn-primary" href="${addURL}" role="button">View ExpenseType Graph</a>
+  			
+  			<spring:url value="/expense/monthly" var="addURL" />
+  			<a class="btn btn-primary" href="${addURL}" role="button">View Monthly Graph</a>
   	</center>
  </div>
  <div class="container">
