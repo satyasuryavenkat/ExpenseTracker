@@ -15,6 +15,21 @@
  <script src="http://localhost:8080/webjars/jquery/3.0.0/js/jquery.min.js" ></script>
 </head>
 <body>
+<center>
+<div style="margin:40px;">
+	
+			<spring:url value="/expense/" var="addURL" />
+  			<a class="btn btn-primary" href="${addURL}" role="button">Home</a>
+  			
+  			<spring:url value="/expense/list" var="addURL" />
+  			<a class="btn btn-primary" href="${addURL}" role="button">View/Add Expenses</a>
+  			
+  			<spring:url value="/expense/graph" var="addURL" />
+  			<a class="btn btn-primary" href="${addURL}" role="button">View Graph</a>
+  	
+ </div>
+</center>
+
  <div class="container">
   <spring:url value="/expense/save" var="saveURL" />
   <h2>Expense</h2>
@@ -22,12 +37,19 @@
    <form:hidden path="id"/>
    <div class="form-group">
     <lable for="ExpenseType">Expense Type</lable>
-    <form:input path="ExpenseType" cssClass="form-control" id="ExpenseType" />
+    
+    <form:select path="ExpenseType" cssClass="form-control" id="ExpenseType" >
+                     <form:option value = "NONE" label = "Select"/>
+                     <form:options items = "${expenseTypeList}" />
+                  </form:select> 
    </div>
    
    <div class="form-group">
     <lable for="ExpenseItem">Expense Item</lable>
-    <form:input path="ExpenseItem" cssClass="form-control" id="ExpenseItem" />
+   <form:select path="ExpenseItem" cssClass="form-control" id="ExpenseItem" >
+                     <form:option value = "NONE" label = "Select"/>
+                     <form:options items = "${expenseItemList}" />
+                  </form:select> 
    </div>
    
    <div class="form-group">

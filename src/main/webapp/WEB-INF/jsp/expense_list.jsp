@@ -13,6 +13,16 @@
  <script src="../webjars/jquery/3.0.0/js/jquery.min.js" ></script>
 </head>
 <body>
+
+<div style="margin:40px;">
+	<center>
+			<spring:url value="/expense/" var="addURL" />
+  			<a class="btn btn-primary" href="${addURL}" role="button">Home</a>
+  			
+  			<spring:url value="/expense/graph" var="addURL" />
+  			<a class="btn btn-primary" href="${addURL}" role="button">View Graph</a>
+  	</center>
+ </div>
  <div class="container">
   <h2>Expense List</h2>
   <table class="table table-striped">
@@ -52,8 +62,8 @@
  </div>
  <br>
  <center>
-  <spring:url value="/expense/graph" var="graphURL" />
-  <a class="btn btn-primary" href="${graphURL}" role="button">View Graph</a>
+  <spring:url value="/expense/" var="graphURL" />
+  <a class="btn btn-primary" href="${graphURL}" role="button">Back</a>
 </center>
 </body>
 </html>

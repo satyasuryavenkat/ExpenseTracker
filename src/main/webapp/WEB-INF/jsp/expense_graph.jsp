@@ -13,6 +13,17 @@
  <script src="../webjars/jquery/3.0.0/js/jquery.min.js" ></script>
 </head>
 <body>
+
+<div style="margin:40px;">
+	<center>
+			<spring:url value="/expense/" var="addURL" />
+  			<a class="btn btn-primary" href="${addURL}" role="button">Home</a>
+  			
+  			<spring:url value="/expense/list" var="addURL" />
+  			<a class="btn btn-primary" href="${addURL}" role="button">View/Add Expenses</a>
+  			
+  	</center>
+ </div>
  <div class="container">
   <h2>Expense Graph</h2>
   <table class="table table-striped">

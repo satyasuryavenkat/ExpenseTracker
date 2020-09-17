@@ -2,10 +2,14 @@ package com.example.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +30,18 @@ public class ExpenseController {
  
  @Autowired
  private ExpenseTypeServiceImpl expensetypeService;
+
  
- @RequestMapping(value= {"/", "/list"}, method=RequestMethod.GET)
+ 
+ @RequestMapping(value= {"/"}, method=RequestMethod.GET)
+ public ModelAndView Home() {
+  ModelAndView model = new ModelAndView();
+  
+  model.setViewName("home");
+  return model;
+ }
+ 
+ @RequestMapping(value= {"/list"}, method=RequestMethod.GET)
  public ModelAndView getAllExpenses() {
   ModelAndView model = new ModelAndView();
   List<Expense> list = expenseService.getAllExpenses();
@@ -71,8 +85,8 @@ public class ExpenseController {
  
  
  @RequestMapping(value="/view/{ExpenseType}", method=RequestMethod.GET)
- public ModelAndView getAllByExpenseType(@PathVariable String ExpenseType) {
-	 ModelAndView model = new ModelAndView();
+ public String getAllByExpenseType(@PathVariable String ExpenseType,ModelMap model) {
+	 
 	  if(ExpenseType!=null)
 	  {
 		  System.out.println(ExpenseType);
@@ -89,20 +103,87 @@ public class ExpenseController {
 		 }
 		 
 	 }
-	 
+	 Map<String, Integer> g =new LinkedHashMap<>();
 	 for(int i=0;i<graphlist.size();i++)
 	 {
-		 System.out.println(graphlist.get(i).getExpenseType());
-		 System.out.println(graphlist.get(i).getExpenseItem());
+		 String iname = graphlist.get(i).getExpenseItem();
+		 int money = g.containsKey(iname)? g.get(iname) : 0;
+		 money = money + graphlist.get(i).getExpenseMoney();
 		 
+		 g.put(iname,money);
 		 
+ 		// System.out.println(graphlist.get(i).getExpenseType());
+		 //System.out.println(graphlist.get(i).getExpenseItem());
 	 }
-	  model.addObject("expenseGraph", graphlist);
+	 getgraphList(g);
+	 List<String> ll = new ArrayList<>();
+	 for(String key : g.keySet())
+	 {
+		 key='"'+key+'"';
+		 ll.add(key);
+		 
+		// System.out.printf("%s %d\n",key,g.get(key));
+	 }
+	 	
+	 model.addAttribute("itemlist",ll);
+	  model.addAttribute("surveyMap", g);
 	  
-	  model.setViewName("expense_graph");
+	
+	  
+	  
 	  }
-	  return model;
+	  return "final_graph";
  }
+ 
+ @ModelAttribute("graph")
+ public Map<String,Integer> getgraphList(Map<String,Integer> mp) {
+   
+    return mp;
+ }
+ 
+ @ModelAttribute("expenseTypeList")
+ public List<String> getexpenseTypeList() {
+    List<String> expenseTypeList = new ArrayList<String>();
+    expenseTypeList.add("Food");
+    expenseTypeList.add("Travel");
+    expenseTypeList.add("Shopping");
+    expenseTypeList.add("Rent");
+    expenseTypeList.add("Bills");
+    expenseTypeList.add("Medical");
+    expenseTypeList.add("Groceries");
+    return expenseTypeList;
+ }
+ 
+ @ModelAttribute("expenseItemList")
+ public List<String> getexpenseItemList() {
+    List<String> expenseItemList = new ArrayList<String>();
+    expenseItemList.add("Coffee");
+    expenseItemList.add("Tea");
+    expenseItemList.add("BeakFast");
+    expenseItemList.add("Lunch");
+    expenseItemList.add("Dinner");
+    expenseItemList.add("Ola");
+    expenseItemList.add("Rapido");
+    expenseItemList.add("Metro");
+    expenseItemList.add("Auto");
+    expenseItemList.add("Clothes");
+    expenseItemList.add("Electronic Gadgets");
+    expenseItemList.add("House Rent");
+    expenseItemList.add("Gas Bill");
+    expenseItemList.add("Current Bill");
+    expenseItemList.add("Recharge Bill");
+    expenseItemList.add("Dish Bill");
+    expenseItemList.add("Wifi Bill");
+    expenseItemList.add("Tablets");
+    expenseItemList.add("Hospital CheckUp");
+    expenseItemList.add("Rice");
+    expenseItemList.add("Vegetables");
+    expenseItemList.add("Soaps");
+    expenseItemList.add("Shampoo");
+    return expenseItemList;
+ }
+ 
+ 
  @RequestMapping(value="/save", method=RequestMethod.POST)
  public ModelAndView saveOrUpdate(@ModelAttribute("expenseForm") Expense expense) {
   if(expense.getId() != 0) {
